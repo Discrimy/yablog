@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Yablog</title>
+</head>
+
+<body>
+<div id="post">
+    <h2 th:text="${post.title}">POST TITLE</h2>
+    <span th:text="${post.author.username}">AUTHOR</span>
+    <p th:text="${post.text}">POST TEXT</p>
+    <ul>
+        <li th:each="comment : ${post.comments}">
+            <span th:text="${comment.author.username}">COMMENT AUTHOR</span>
+            <p th:text="${comment.text}">COMMENT TEXT</p>
+        </li>
+    </ul>
+</div>
+</body>
+
+</html>
