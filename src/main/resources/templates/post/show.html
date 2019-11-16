@@ -1,25 +1,68 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" th:replace="base :: base(~{::#content})" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Yablog</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{~/static/css/bootstrap.min.css}">
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{~/static/css/style.css}">
 </head>
 
 <body>
-<div id="post">
-    <h2 th:text="${post.title}">POST TITLE</h2>
-    <span th:text="${post.author.username}">AUTHOR</span>
-    <p th:text="${post.text}">POST TEXT</p>
-    <ul>
-        <li th:each="comment : ${post.comments}">
-            <span th:text="${comment.author.username}">COMMENT AUTHOR</span>
-            <p th:text="${comment.text}">COMMENT TEXT</p>
-        </li>
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#" th:href="@{~/}">Yablog</a>
+</nav>
+
+<div id="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-body bg-dark text-light">
+                <h5 class="card-title" th:text="${post.title}">POST TITLE</h5>
+                <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}"></h6>POST AUTHOR</h6>
+                <p class="card-text" th:text="${post.text}">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Consequuntur eaque, pariatur recusandae laudantium odio provident officia quos sunt sapiente
+                    impedit! Voluptates quod quo ratione doloremque, voluptas provident autem temporibus dignissimos
+                    recusandae ut error, laboriosam labore cum dicta iusto expedita? Eius dolor, nostrum harum
+                    voluptatum in quisquam molestias quasi provident veniam voluptatem facere totam debitis?
+                    Quisquam rem culpa, ducimus, cupiditate voluptatum repellendus inventore deserunt dolorum
+                    laudantium fugiat nobis minima sint doloremque rerum corrupti earum, labore exercitationem! Unde
+                    asperiores minus tempore sequi delectus veniam. Perspiciatis laborum a sit corrupti quas cumque
+                    laboriosam expedita? Excepturi eos recusandae quisquam temporibus deleniti voluptatum, dolores
+                    illo!</p>
+                <div id="comments-section">
+                    <div class="card" th:each="comment : ${post.comments}">
+                        <div class="card-body bg-dark text-light">
+                            <h6 class="card-subtitle mb-2 text-muted" th:text="${comment.author.username}">COMMENT
+                                AUTHOR</h6>
+                            <p class="card-text" th:text="${comment.text}">Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ipsum voluptatum ipsa nobis nihil! Facilis enim dolore sunt
+                                cumque, ipsam fugiat.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script crossorigin="anonymous"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+</script>
+<script crossorigin="anonymous"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+</script>
+<script crossorigin="anonymous"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+</script>
 </body>
 
 </html>

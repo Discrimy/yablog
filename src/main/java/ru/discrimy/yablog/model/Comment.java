@@ -19,5 +19,6 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User author;
     @Column(name = "text")
+    @Lob
     private String text;
 }

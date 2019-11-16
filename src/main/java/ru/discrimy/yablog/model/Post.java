@@ -17,6 +17,7 @@ public class Post extends BaseEntity {
     @Column(name = "title")
     private String title;
     @Column(name = "text")
+    @Lob
     private String text;
     @ManyToOne
     @JoinColumn(name = "user_id")
