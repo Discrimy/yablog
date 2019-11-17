@@ -9,5 +9,4 @@ public class YablogApplication {
     public static void main(String[] args) {
         SpringApplication.run(YablogApplication.class, args);
     }
-
 }

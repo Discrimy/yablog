@@ -2,6 +2,7 @@ package ru.discrimy.yablog.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.discrimy.yablog.model.Comment;
 import ru.discrimy.yablog.model.Post;
@@ -20,18 +21,27 @@ public class DataDevBootstrap implements CommandLineRunner {
     private CommentService commentService;
     private UserService userService;
 
-    public DataDevBootstrap(PostService postService, CommentService commentService, UserService userService) {
+    private PasswordEncoder passwordEncoder;
+
+    public DataDevBootstrap(PostService postService, CommentService commentService, UserService userService, PasswordEncoder passwordEncoder) {
         this.postService = postService;
         this.commentService = commentService;
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void run(String... args) throws Exception {
         log.debug("Loading test data...");
 
-        User admin = new User("admin", "hashed_password", new HashSet<>());
-        User user1 = new User("user1", "hashed_1234", new HashSet<>());
+        User admin = new User(
+                "admin",
+                passwordEncoder.encode("admin123"),
+                new HashSet<>(), new HashSet<>());
+        User user1 = new User(
+                "user1",
+                passwordEncoder.encode("user1123"),
+                new HashSet<>(), new HashSet<>());
 
         Post post1 = new Post("First post!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam scelerisque ipsum. Aenean porta urna vel mauris bibendum dictum. Morbi pretium convallis odio sed convallis. Ut in justo id augue consequat varius. Mauris lobortis varius ullamcorper. Mauris dignissim ex a erat dignissim, eget bibendum lacus luctus. Etiam malesuada augue id ullamcorper posuere. Nunc ipsum ligula, efficitur vel diam id, cursus accumsan metus. Aenean volutpat velit non arcu faucibus, nec pretium ipsum porta. Ut bibendum ut risus sit amet efficitur.\n" +
                 "\n" +

@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class BaseJpaService<T extends BaseEntity> implements BaseService<T> {
-    private BaseRepository<T> repository;
+    protected BaseRepository<T> repository;
 
     public BaseJpaService(BaseRepository<T> repository) {
         this.repository = repository;
