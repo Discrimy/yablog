@@ -31,7 +31,7 @@
                     laboriosam expedita? Excepturi eos recusandae quisquam temporibus deleniti voluptatum, dolores
                     illo!</p>
                 <div id="comments-section">
-                    <div class="card bg-dark text-light mb-2" th:each="comment : ${post.comments}">
+                    <div class="card bg-dark mb-2 border-light" th:each="comment : ${post.comments}">
                         <div class="card-body">
                             <h6 class="card-subtitle text-muted" th:text="${comment.author.username}">COMMENT
                                 AUTHOR</h6>
@@ -40,12 +40,27 @@
                                 cumque, ipsam fugiat.</p>
                         </div>
                     </div>
-                    <div class="card mb-2" th:remove="all">
-                        <div class="card-body bg-dark">
-                            <h6 class="card-subtitle text-muted">COMMENT AUTHOR</h6>
+                    <div class="card bg-dark mb-2 border-light" th:remove="all">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted">COMMENT
+                                AUTHOR</h6>
                             <p class="card-text">Lorem ipsum dolor sit amet consectetur
                                 adipisicing elit. Ipsum voluptatum ipsa nobis nihil! Facilis enim dolore sunt
                                 cumque, ipsam fugiat.</p>
+                        </div>
+                    </div>
+                    <div class="card bg-dark mb-2 border-light" sec:authorize="isAuthenticated()">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted"
+                                th:text="${#authentication.getPrincipal().getUsername()}">COMMENT AUTHOR</h6>
+
+                            <form action="#" method="POST" th:action="@{'~/post/' + ${post.id} + '/addcomment'}">
+                                <div class="input-group my-2">
+                                    <textarea class="form-control bg-dark text-light" name="text"
+                                              placeholder="Comment"></textarea>
+                                </div>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
