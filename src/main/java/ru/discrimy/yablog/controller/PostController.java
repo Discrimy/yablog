@@ -5,11 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.discrimy.yablog.model.Comment;
+import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.model.User;
 import ru.discrimy.yablog.security.UserPrincipal;
 import ru.discrimy.yablog.service.CommentService;
 import ru.discrimy.yablog.service.PostService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 @Controller
@@ -42,5 +44,27 @@ public class PostController {
         commentService.save(newComment);
 
         return new ModelAndView("redirect:/post/" + postId + "/show");
+    }
+
+    @GetMapping("add")
+    public ModelAndView addPost() {
+        return new ModelAndView("post/add");
+    }
+
+    @PostMapping("add")
+    public ModelAndView addPost(@RequestParam String title,
+                                @RequestParam String text,
+                                Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        Post newPost = new Post(
+                title,
+                text,
+                user,
+                new ArrayList<>()
+        );
+        Post savedPost = postService.save(newPost);
+
+        return new ModelAndView("redirect:/post/" + savedPost.getId() + "/show");
     }
 }
