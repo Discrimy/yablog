@@ -1,3 +1,20 @@
-#comments-section > div {
-    margin: 20px;
+html {
+    height: 100vh;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.post-text {
+    max-height: 15em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
