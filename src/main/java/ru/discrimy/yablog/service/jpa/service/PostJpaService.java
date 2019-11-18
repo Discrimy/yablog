@@ -24,4 +24,16 @@ public class PostJpaService extends BaseJpaService<Post> implements PostService 
         }
         return true;
     }
+
+    @Override
+    public boolean hasAuthorityToDelete(User user, Post post) throws PostNotFoundException {
+        if (post.getId() != null) {
+            User originAuthor = findById(post.getId())
+                    .orElseThrow(PostNotFoundException::new)
+                    .getAuthor();
+
+            return originAuthor.getUsername().equals(user.getUsername());
+        }
+        return true;
+    }
 }

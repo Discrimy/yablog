@@ -20,9 +20,16 @@
             <div class="card-body bg-dark text-light">
                 <div class="card-title d-flex justify-content-between align-items-start">
                     <h5 th:text="${post.title}">POST TITLE </h5>
-                    <a class="card-link btn btn-sm btn-secondary" href="#" sec:authorize="isAuthenticated()"
-                       th:href="@{'~/post/add/' + ${post.id}}"
-                       th:if="${#authentication.getPrincipal().getUsername()} eq ${post.author.username}">Edit</a>
+                    <div class="post-controls">
+                        <a class="card-link btn btn-sm btn-secondary" href="#" sec:authorize="isAuthenticated()"
+                           th:href="@{'~/post/add/' + ${post.id}}"
+                           th:if="${#authentication.getPrincipal().getUsername()} eq ${post.author.username}">Edit</a>
+                        <form action="#" class="d-inline" method="POST" sec:authorize="isAuthenticated()"
+                              th:action="@{'~/post/' + ${post.id} + '/delete'}"
+                              th:if="${#authentication.getPrincipal().getUsername()} eq ${post.author.username}">
+                            <button class="btn btn-sm btn-secondary" type="submit">Delete</button>
+                        </form>
+                    </div>
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}">POST AUTHOR</h6>
                 <p class="card-text" th:text="${post.text}">Lorem ipsum dolor sit amet consectetur adipisicing elit.

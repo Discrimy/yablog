@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.discrimy.yablog.exceptions.PostNotFoundException;
+import ru.discrimy.yablog.exceptions.UnauthorizedDeleteException;
 import ru.discrimy.yablog.exceptions.UnauthorizedEditException;
 import ru.discrimy.yablog.model.Comment;
 import ru.discrimy.yablog.model.Post;
@@ -89,5 +90,20 @@ public class PostController {
         Post savedPost = postService.save(post);
 
         return new ModelAndView("redirect:/post/" + savedPost.getId() + "/show");
+    }
+
+    @PostMapping("{postId}/delete")
+    public ModelAndView deletePost(@PathVariable Long postId,
+                                   Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        Post post = postService.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+        if (!postService.hasAuthorityToDelete(user, post)) {
+            throw new UnauthorizedDeleteException();
+        }
+
+        postService.delete(post);
+        return new ModelAndView("redirect:/");
     }
 }

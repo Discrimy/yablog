@@ -22,6 +22,6 @@ public class Post extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 }
