@@ -18,7 +18,12 @@
     <div class="container">
         <div class="card">
             <div class="card-body bg-dark text-light">
-                <h5 class="card-title" th:text="${post.title}">POST TITLE</h5>
+                <div class="card-title d-flex justify-content-between align-items-start">
+                    <h5 th:text="${post.title}">POST TITLE </h5>
+                    <a class="card-link btn btn-sm btn-secondary" href="#" sec:authorize="isAuthenticated()"
+                       th:href="@{'~/post/add/' + ${post.id}}"
+                       th:if="${#authentication.getPrincipal().getUsername()} eq ${post.author.username}">Edit</a>
+                </div>
                 <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}">POST AUTHOR</h6>
                 <p class="card-text" th:text="${post.text}">Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur eaque, pariatur recusandae laudantium odio provident officia quos sunt sapiente
