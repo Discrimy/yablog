@@ -31,7 +31,11 @@
                         </form>
                     </div>
                 </div>
-                <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}">POST AUTHOR</h6>
+                <h6 class="card-subtitle mb-2">
+                    <a class="text-muted"
+                       href="#" th:href="@{'~/user/' + ${post.author.id}}"
+                       th:text="${post.author.username}">USERNAME</a>
+                </h6>
                 <p class="card-text" th:text="${post.text}">Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur eaque, pariatur recusandae laudantium odio provident officia quos sunt sapiente
                     impedit! Voluptates quod quo ratione doloremque, voluptas provident autem temporibus dignissimos
@@ -45,8 +49,11 @@
                 <div id="comments-section">
                     <div class="card bg-dark mb-2 border-light" th:each="comment : ${post.comments}">
                         <div class="card-body">
-                            <h6 class="card-subtitle text-muted" th:text="${comment.author.username}">COMMENT
-                                AUTHOR</h6>
+                            <h6 class="card-subtitle">
+                                <a class="text-muted"
+                                   href="#" th:href="@{'~/user/' + ${comment.author.id}}"
+                                   th:text="${comment.author.username}">USERNAME</a>
+                            </h6>
                             <p class="card-text" th:text="${comment.text}">Lorem ipsum dolor sit amet consectetur
                                 adipisicing elit. Ipsum voluptatum ipsa nobis nihil! Facilis enim dolore sunt
                                 cumque, ipsam fugiat.</p>
@@ -63,8 +70,11 @@
                     </div>
                     <div class="card bg-dark mb-2 border-light" sec:authorize="isAuthenticated()">
                         <div class="card-body">
-                            <h6 class="card-subtitle text-muted"
-                                th:text="${#authentication.getPrincipal().getUsername()}">COMMENT AUTHOR</h6>
+                            <h6 class="card-subtitle">
+                                <a class="text-muted"
+                                   href="#" th:href="@{'~/user/' + ${#authentication.getPrincipal().getUser().getId()}}"
+                                   th:text="${#authentication.getPrincipal().getUsername()}">USERNAME</a>
+                            </h6>
 
                             <form action="#" method="POST" th:action="@{'~/post/' + ${post.id} + '/addcomment'}">
                                 <div class="input-group my-2">
