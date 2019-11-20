@@ -22,7 +22,7 @@
                     <h5 th:text="${post.title}">POST TITLE </h5>
                     <div class="post-controls">
                         <a class="card-link btn btn-sm btn-secondary" href="#" sec:authorize="isAuthenticated()"
-                           th:href="@{'~/post/add/' + ${post.id}}"
+                           th:href="@{'~/post/' + ${post.id} + '/edit'}"
                            th:if="${#authentication.getPrincipal().getUsername()} eq ${post.author.username}">Edit</a>
                         <form action="#" class="d-inline" method="POST" sec:authorize="isAuthenticated()"
                               th:action="@{'~/post/' + ${post.id} + '/delete'}"

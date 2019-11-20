@@ -62,7 +62,7 @@ public class PostController {
                 )));
     }
 
-    @GetMapping("add/{postId}")
+    @GetMapping("{postId}/edit")
     public ModelAndView savePost(@PathVariable Long postId,
                                  Authentication authentication) {
         User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
