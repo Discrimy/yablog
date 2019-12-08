@@ -21,12 +21,12 @@
                 <div class="card-title d-flex justify-content-between align-items-start">
                     <h5 th:text="${post.title}">POST TITLE </h5>
                     <div class="post-controls">
-                        <a class="card-link btn btn-sm btn-secondary" href="#" sec:authorize="isAuthenticated()"
+                        <a class="card-link btn btn-sm btn-secondary" href="#"
                            th:href="@{'~/post/' + ${post.id} + '/edit'}"
-                           th:if="${#authentication.getPrincipal().getUsername()} eq ${post.author.username}">Edit</a>
-                        <form action="#" class="d-inline" method="POST" sec:authorize="isAuthenticated()"
+                           th:if="${@accessEvaluator.hasAccessToPost(#request.userPrincipal, post)}">Edit</a>
+                        <form action="#" class="d-inline" method="POST"
                               th:action="@{'~/post/' + ${post.id} + '/delete'}"
-                              th:if="${#authentication.getPrincipal().getUsername()} eq ${post.author.username}">
+                              th:if="${@accessEvaluator.hasAccessToPost(#request.userPrincipal, post)}">
                             <button class="btn btn-sm btn-secondary" type="submit">Delete</button>
                         </form>
                     </div>

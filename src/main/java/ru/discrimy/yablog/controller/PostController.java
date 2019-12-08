@@ -10,6 +10,7 @@ import ru.discrimy.yablog.exceptions.UnauthorizedEditException;
 import ru.discrimy.yablog.model.Comment;
 import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.model.User;
+import ru.discrimy.yablog.security.AccessEvaluator;
 import ru.discrimy.yablog.security.UserPrincipal;
 import ru.discrimy.yablog.service.CommentService;
 import ru.discrimy.yablog.service.PostService;
@@ -23,10 +24,12 @@ import java.util.Map;
 public class PostController {
     private PostService postService;
     private CommentService commentService;
+    private AccessEvaluator accessEvaluator;
 
-    public PostController(PostService postService, CommentService commentService) {
+    public PostController(PostService postService, CommentService commentService, AccessEvaluator accessEvaluator) {
         this.postService = postService;
         this.commentService = commentService;
+        this.accessEvaluator = accessEvaluator;
     }
 
     @GetMapping("{postId}/show")
@@ -69,7 +72,7 @@ public class PostController {
 
         Post post = postService.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
-        if (!postService.hasAuthorityToEdit(user, post)) {
+        if (!accessEvaluator.hasAccessToPost(authentication, post)) {
             throw new UnauthorizedEditException();
         }
 
@@ -82,11 +85,14 @@ public class PostController {
                                  Authentication authentication) {
         User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
 
-        if (!postService.hasAuthorityToEdit(user, post)) {
+        if (!accessEvaluator.hasAccessToPost(authentication, post)) {
             throw new UnauthorizedEditException();
         }
 
-        post.setAuthor(user);
+        if (post.getAuthor() == null) {
+            post.setAuthor(user);
+        }
+
         Post savedPost = postService.save(post);
 
         return new ModelAndView("redirect:/post/" + savedPost.getId() + "/show");
@@ -99,7 +105,7 @@ public class PostController {
 
         Post post = postService.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
-        if (!postService.hasAuthorityToDelete(user, post)) {
+        if (!accessEvaluator.hasAccessToPost(authentication, post)) {
             throw new UnauthorizedDeleteException();
         }
 

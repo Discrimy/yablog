@@ -18,6 +18,7 @@
     <div class="container-fluid">
         <form action="#" method="post" th:action="@{~/post/add}" th:object="${post}">
             <input th:field="*{id}" type="hidden">
+            <input th:field="*{author}" type="hidden">
             <div class="row">
                 <div class="card col-sm-6" id="new-post-markdown">
                     <div class="card-body bg-dark text-light">
@@ -42,8 +43,8 @@
                         <h5 class="card-title">POST TITLE</h5>
                         <h6 class="card-subtitle mb-2">
                             <a class="text-muted" href="#"
-                               th:href="@{'~/user/' + ${#authentication.getPrincipal().getUser().getId()}}"
-                               th:text="${#authentication.getPrincipal().getUsername()}">USERNAME</a>
+                               th:href="@{'~/user/' + ${post.author != null ? post.author.id : #authentication.getPrincipal().getUser().getId()}}"
+                               th:text="${post.author != null} ? ${post.author.username} : ${#authentication.getPrincipal().getUsername()}">USERNAME</a>
                         </h6>
                         <p class="card-text"></p>
                     </div>
