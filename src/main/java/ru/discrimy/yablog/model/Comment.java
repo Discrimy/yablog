@@ -13,12 +13,12 @@ import javax.persistence.*;
 @Table(name = "comments")
 public class Comment extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", nullable = false)
     private Post post;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User author;
-    @Column(name = "text")
+    @Column(name = "text", nullable = false)
     @Lob
     private String text;
 }

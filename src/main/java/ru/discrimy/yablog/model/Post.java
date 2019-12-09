@@ -14,13 +14,13 @@ import java.util.List;
 @Entity
 @Table(name = "posts")
 public class Post extends BaseEntity {
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
-    @Column(name = "text")
+    @Column(name = "text", nullable = false)
     @Lob
     private String text;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User author;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();

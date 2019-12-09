@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "authorities")
 public class Authority extends BaseEntity {
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     @ManyToMany(mappedBy = "authorities")
     private Set<User> users = new HashSet<>();

@@ -14,9 +14,9 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
-    @Column(name = "hashed_password")
+    @Column(name = "hashed_password", nullable = false)
     private String hashedPassword;
     @OneToMany(mappedBy = "author")
     private Set<Post> posts = new HashSet<>();
