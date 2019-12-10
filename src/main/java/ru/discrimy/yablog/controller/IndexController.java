@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.service.PostService;
-import ru.discrimy.yablog.service.jpa.repository.PostRepository;
 
 import java.util.Map;
 
@@ -18,18 +17,16 @@ import java.util.Map;
 @RequestMapping("/")
 public class IndexController {
     private PostService postService;
-    private PostRepository postRepository;
 
-    public IndexController(PostService postService, PostRepository postRepository) {
+    public IndexController(PostService postService) {
         this.postService = postService;
-        this.postRepository = postRepository;
     }
 
     @GetMapping("/")
     public ModelAndView index(
             @PageableDefault(size = 5, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Page<Post> posts = postRepository.findAll(pageable);
+        Page<Post> posts = postService.findAll(pageable);
 
         int currentPage = pageable.getPageNumber();
         int minPage = Math.max(currentPage - 3, 0);
