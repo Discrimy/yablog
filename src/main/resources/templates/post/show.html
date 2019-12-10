@@ -33,7 +33,7 @@
                 </div>
                 <h6 class="card-subtitle mb-2">
                     <a class="text-muted"
-                       href="#" th:href="@{'~/user/' + ${post.author.id}}"
+                       href="#" th:href="@{'~/user/' + ${post.author.id} + '/show'}"
                        th:text="${post.author.username}">USERNAME</a>
                 </h6>
                 <p class="card-text" th:text="${post.text}">Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -51,19 +51,10 @@
                         <div class="card-body">
                             <h6 class="card-subtitle">
                                 <a class="text-muted"
-                                   href="#" th:href="@{'~/user/' + ${comment.author.id}}"
+                                   href="#" th:href="@{'~/user/' + ${comment.author.id} + '/show'}"
                                    th:text="${comment.author.username}">USERNAME</a>
                             </h6>
                             <p class="card-text" th:text="${comment.text}">Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ipsum voluptatum ipsa nobis nihil! Facilis enim dolore sunt
-                                cumque, ipsam fugiat.</p>
-                        </div>
-                    </div>
-                    <div class="card bg-dark mb-2 border-light" th:remove="all">
-                        <div class="card-body">
-                            <h6 class="card-subtitle text-muted">COMMENT
-                                AUTHOR</h6>
-                            <p class="card-text">Lorem ipsum dolor sit amet consectetur
                                 adipisicing elit. Ipsum voluptatum ipsa nobis nihil! Facilis enim dolore sunt
                                 cumque, ipsam fugiat.</p>
                         </div>
@@ -72,7 +63,8 @@
                         <div class="card-body">
                             <h6 class="card-subtitle">
                                 <a class="text-muted"
-                                   href="#" th:href="@{'~/user/' + ${#authentication.getPrincipal().getUser().getId()}}"
+                                   href="#"
+                                   th:href="@{'~/user/' + ${#authentication.getPrincipal().getUser().getId()} + '/show'}"
                                    th:text="${#authentication.getPrincipal().getUsername()}">USERNAME</a>
                             </h6>
 

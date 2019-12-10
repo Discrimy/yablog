@@ -20,7 +20,7 @@
             <div class="card-body">
                 <h5 class="card-title" th:text="${post.title}">POST TITLE</h5>
                 <h6 class="card-subtitle mb-2">
-                    <a class="text-muted" href="#" th:href="@{'~/user/' + ${post.author.id}}"
+                    <a class="text-muted" href="#" th:href="@{'~/user/' + ${post.author.id} + '/show'}"
                        th:text="${post.author.username}">USERNAME</a>
                 </h6>
                 <p class="post-text card-text" th:text="${post.text}">Lorem ipsum dolor sit amet consectetur

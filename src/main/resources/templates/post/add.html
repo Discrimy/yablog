@@ -43,7 +43,7 @@
                         <h5 class="card-title">POST TITLE</h5>
                         <h6 class="card-subtitle mb-2">
                             <a class="text-muted" href="#"
-                               th:href="@{'~/user/' + ${post.author != null ? post.author.id : #authentication.getPrincipal().getUser().getId()}}"
+                               th:href="@{'~/user/' + ${post.author != null ? post.author.id : #authentication.getPrincipal().getUser().getId()} + '/show'}"
                                th:text="${post.author != null} ? ${post.author.username} : ${#authentication.getPrincipal().getUsername()}">USERNAME</a>
                         </h6>
                         <p class="card-text"></p>
