@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Yablog</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{~/static/css/bootstrap.min.css}">
+    <link href="../static/css/style.css" rel="stylesheet" th:href="@{~/static/css/style.css}">
+</head>
+
+<body>
+
+<nav aria-label="Page navigation"
+     class="d-flex justify-content-center"
+     th:fragment="pager(current, min, max)">
+    <ul class="pagination">
+        <li class="page-item" th:classappend="${current == min} ? 'disabled'">
+            <a class="page-link" href="#" th:href="@{''(page=${current - 1})}">Previous</a>
+        </li>
+        <li class="page-item" th:classappend="${pageNum == current} ? 'active'"
+            th:each="pageNum: ${#numbers.sequence(min, max - 1)}">
+            <a class="page-link"
+               href="#" th:href="@{''(page=${pageNum})}"
+               th:text="${pageNum + 1}">-1</a>
+        </li>
+        <li class="page-item" th:classappend="${current == max - 1} ? 'disabled'">
+            <a class="page-link" href="#" th:href="@{''(page=${current + 1})}">Next</a>
+        </li>
+    </ul>
+</nav>
+
+</body>
+
+</html>
