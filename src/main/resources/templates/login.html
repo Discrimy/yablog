@@ -16,7 +16,7 @@
 
 <div id="content">
     <div class="container">
-        <form action="/login" class="p-3 rounded bg-dark text-light" method="POST" th:action="@{~/login}">
+        <form action="/login" class="p-3 rounded bg-primary text-light" method="POST" th:action="@{~/login}">
             <div class="form-group">
                 <label for="username-input">Username</label>
                 <input class="form-control" id="username-input" name="username" placeholder="Username" type="text">
@@ -25,7 +25,7 @@
                 <label for="password-input">Password</label>
                 <input class="form-control" id="password-input" name="password" placeholder="Password" type="password">
             </div>
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-secondary" type="submit">Submit</button>
         </form>
     </div>
 </div>
