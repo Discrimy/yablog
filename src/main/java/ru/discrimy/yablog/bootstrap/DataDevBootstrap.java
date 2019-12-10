@@ -14,6 +14,7 @@ import ru.discrimy.yablog.service.PostService;
 import ru.discrimy.yablog.service.UserService;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -88,6 +89,14 @@ public class DataDevBootstrap implements CommandLineRunner {
         commentService.save(comment13);
         commentService.save(comment14);
         commentService.save(comment15);
+
+        for (int i = 0; i < 30; i++) {
+            postService.save(new Post(
+                    "Lorem",
+                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint autem sed tenetur in suscipit nam vero modi fugit ad quod.",
+                    user1,
+                    List.of()));
+        }
 
         log.debug("Loading finished");
     }
