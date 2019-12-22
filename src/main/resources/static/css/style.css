@@ -1,20 +1,37 @@
 html {
-    height: 100vh;
+  height: 100vh;
 }
 
 body {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 #content {
-    margin-top: 15px;
-    margin-bottom: 20px;
+  margin-top: 15px;
+  margin-bottom: 20px;
 }
 
 .post-text {
-    max-height: 15em;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  max-height: 15em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-vote-btn {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  cursor: pointer;
+  font-size: 1.3em;
+  height: fit-content;
+}
+
+.post-vote-btn.post-upvote:hover, .post-vote-btn.post-upvote.post-vote-done {
+    color: green !important;
+}
+
+.post-vote-btn.post-downvote:hover, .post-vote-btn.post-downvote.post-vote-done {
+    color: red !important;
 }
