@@ -4,7 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,4 +26,9 @@ public class Post extends BaseEntity {
     private User author;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Set<Upvote> upvotes = new HashSet<>();
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Set<Downvote> downvotes = new HashSet<>();
 }

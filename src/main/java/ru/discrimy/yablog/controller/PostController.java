@@ -7,17 +7,16 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.discrimy.yablog.exceptions.PostNotFoundException;
 import ru.discrimy.yablog.exceptions.UnauthorizedDeleteException;
 import ru.discrimy.yablog.exceptions.UnauthorizedEditException;
-import ru.discrimy.yablog.model.Comment;
-import ru.discrimy.yablog.model.Post;
-import ru.discrimy.yablog.model.User;
+import ru.discrimy.yablog.model.*;
 import ru.discrimy.yablog.security.AccessEvaluator;
 import ru.discrimy.yablog.security.UserPrincipal;
 import ru.discrimy.yablog.service.CommentService;
 import ru.discrimy.yablog.service.PostService;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("post")
@@ -33,10 +32,21 @@ public class PostController {
     }
 
     @GetMapping("{postId}/show")
-    public ModelAndView show(@PathVariable Long postId) {
-        return new ModelAndView("post/show", Collections.singletonMap(
-                "post", postService.findById(postId)
-                        .orElseThrow(PostNotFoundException::new)));
+    public ModelAndView show(@PathVariable Long postId, Authentication authentication) {
+        Map<String, Object> map = new HashMap<>();
+
+        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
+        map.put("post", post);
+        if (authentication != null) {
+            User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+            map.put("isPostUpvoted", post.getUpvotes().stream()
+                    .anyMatch(upvote -> upvote.getUser().getId().equals(user.getId())));
+            map.put("isPostDownvoted", post.getDownvotes().stream()
+                    .anyMatch(downvote -> downvote.getUser().getId().equals(user.getId())));
+        }
+
+        return new ModelAndView("post/show", map);
     }
 
     @PostMapping("{postId}/addcomment")
@@ -61,7 +71,9 @@ public class PostController {
                         "Post title",
                         "# Post header",
                         null,
-                        new ArrayList<>()
+                        new ArrayList<>(),
+                        Set.of(),
+                        Set.of()
                 )));
     }
 
@@ -111,5 +123,37 @@ public class PostController {
 
         postService.delete(post);
         return new ModelAndView("redirect:/");
+    }
+
+    @PostMapping("{postId}/upvote")
+    public @ResponseBody
+    VoteStatus upvote(@PathVariable Long postId,
+                      Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
+        if (post.getUpvotes().stream().anyMatch(upvote -> upvote.getUser().getId().equals(user.getId()))) {
+            return new VoteStatus(post.getId(), user.getId(), VoteStatus.Status.ALREADY_DONE);
+        }
+
+        post.getUpvotes().add(new Upvote(post, user));
+        postService.save(post);
+        return new VoteStatus(post.getId(), user.getId(), VoteStatus.Status.OK);
+    }
+
+    @PostMapping("{postId}/downvote")
+    @ResponseBody
+    public VoteStatus downvote(@PathVariable Long postId,
+                               Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
+        if (post.getDownvotes().stream().anyMatch(downvote -> downvote.getUser().getId().equals(user.getId()))) {
+            return new VoteStatus(post.getId(), user.getId(), VoteStatus.Status.ALREADY_DONE);
+        }
+
+        post.getDownvotes().add(new Downvote(post, user));
+        postService.save(post);
+        return new VoteStatus(post.getId(), user.getId(), VoteStatus.Status.OK);
     }
 }
