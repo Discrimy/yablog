@@ -13,8 +13,6 @@ import ru.discrimy.yablog.service.CommentService;
 import ru.discrimy.yablog.service.PostService;
 import ru.discrimy.yablog.service.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -43,12 +41,10 @@ public class DataDevBootstrap implements CommandLineRunner {
         User admin = new User(
                 "admin",
                 passwordEncoder.encode("admin123"),
-                Set.of(),
                 Set.of(roleAdmin));
         User user1 = new User(
                 "user1",
                 passwordEncoder.encode("user1123"),
-                Set.of(),
                 Set.of());
 
         Post post1 = new Post("First post!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam scelerisque ipsum. Aenean porta urna vel mauris bibendum dictum. Morbi pretium convallis odio sed convallis. Ut in justo id augue consequat varius. Mauris lobortis varius ullamcorper. Mauris dignissim ex a erat dignissim, eget bibendum lacus luctus. Etiam malesuada augue id ullamcorper posuere. Nunc ipsum ligula, efficitur vel diam id, cursus accumsan metus. Aenean volutpat velit non arcu faucibus, nec pretium ipsum porta. Ut bibendum ut risus sit amet efficitur.\n" +
@@ -60,7 +56,7 @@ public class DataDevBootstrap implements CommandLineRunner {
                 "Maecenas ut cursus ipsum. Morbi facilisis facilisis magna ac semper. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum id gravida lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi ultrices feugiat arcu, id aliquam tortor. Nulla vitae enim id ex bibendum tempus. Nam dignissim magna a nunc porttitor, id rutrum enim euismod. Fusce euismod semper ante a aliquet. Nam vitae ligula nec erat molestie porttitor. Praesent consequat elementum dui dictum pellentesque. Quisque bibendum nisi quis erat interdum, eget vulputate nisl luctus. Aenean gravida est ligula, vitae pharetra lorem aliquet id.\n" +
                 "\n" +
                 "Mauris sed erat non urna sodales varius quis in nunc. Nullam et nulla enim. Phasellus tincidunt feugiat odio, et porta nibh egestas venenatis. Praesent ac laoreet arcu, vitae convallis justo. Donec fermentum bibendum ante eu volutpat. Nam at elementum massa, id ultrices orci. Aliquam feugiat pretium turpis, vel faucibus leo elementum vitae. Donec posuere justo ut sem pellentesque ultricies. Mauris a egestas massa, quis posuere augue. Vivamus egestas orci arcu, vel mollis ligula hendrerit non. Morbi suscipit dolor feugiat nisl accumsan, eget facilisis metus accumsan. Proin vehicula dui tristique, ultrices lectus sed, euismod diam.",
-                admin, new ArrayList<>(), Set.of(), Set.of());
+                admin);
         Post post2 = new Post("Second post", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin turpis risus, dapibus at augue ac, vulputate consequat lacus. Sed id sollicitudin dolor. Praesent pellentesque, dolor eu placerat placerat, risus nisi varius massa, et ornare lacus nisi sed tortor. Nulla nec sollicitudin eros, eget dapibus leo. Ut in egestas lorem. Vivamus eget fringilla purus. Nullam interdum ipsum eu est rhoncus condimentum. Etiam finibus, erat quis accumsan dapibus, ex dolor bibendum elit, non accumsan ligula arcu nec est. Nam egestas diam at finibus maximus. Vestibulum fringilla quis tortor non maximus. Aenean efficitur, nulla a molestie volutpat, mauris orci interdum urna, vitae sollicitudin tellus metus non orci. Phasellus pretium est orci, non pretium odio tristique vitae. Donec et tellus urna. Curabitur auctor blandit ipsum, pretium sodales nibh ultrices at.\n" +
                 "\n" +
                 "Vivamus nec odio urna. Vivamus semper vel justo sed rhoncus. Pellentesque id enim quis arcu finibus vulputate. Fusce leo arcu, elementum maximus ex at, rutrum efficitur arcu. Fusce vestibulum sem a turpis convallis, quis ullamcorper mauris egestas. Suspendisse eu tempus nibh. Pellentesque sit amet orci sit amet leo fermentum congue in non arcu. Suspendisse potenti. Aliquam tincidunt tincidunt libero, nec eleifend lacus commodo ac. Integer dui orci, consectetur et posuere sit amet, ultrices eu justo.\n" +
@@ -70,7 +66,7 @@ public class DataDevBootstrap implements CommandLineRunner {
                 "Nullam feugiat viverra odio, non fringilla dui. Proin sit amet metus sit amet arcu mattis sollicitudin nec vel libero. Suspendisse sed ultrices nulla. Phasellus auctor molestie orci non imperdiet. Duis sollicitudin mauris in augue aliquet, id consectetur dui eleifend. Nullam congue magna ut sagittis eleifend. Nulla consectetur odio non dictum finibus. Integer elementum molestie nulla quis blandit.\n" +
                 "\n" +
                 "Integer vulputate erat sed sodales ultrices. Aenean efficitur aliquet orci vitae sollicitudin. Nullam libero erat, varius eget hendrerit in, cursus sed nibh. Duis venenatis, lacus ut iaculis elementum, tellus leo malesuada lectus, sed vulputate metus diam vel mi. Integer consectetur ante sed arcu condimentum, eu sollicitudin nisi rhoncus. In magna elit, congue at diam sit amet, malesuada pretium libero. Quisque nulla tellus, porta ac porta imperdiet, lacinia finibus magna. Sed feugiat a tortor non viverra. Phasellus nec egestas sem. Etiam porta malesuada libero at volutpat. Aliquam pulvinar tincidunt feugiat.",
-                user1, new ArrayList<>(), Set.of(), Set.of());
+                user1);
 
         Comment comment11 = new Comment(post1, user1, "Awo1");
         Comment comment12 = new Comment(post1, user1, "Awo2");
@@ -94,9 +90,7 @@ public class DataDevBootstrap implements CommandLineRunner {
             postService.save(new Post(
                     "Lorem",
                     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint autem sed tenetur in suscipit nam vero modi fugit ad quod.",
-                    user1,
-                    List.of(),
-                    Set.of(), Set.of()));
+                    user1));
         }
 
         log.debug("Loading finished");

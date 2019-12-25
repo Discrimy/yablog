@@ -28,7 +28,8 @@
                              th:onclick="'onUpvote(' + ${post.id} + ')'">
                             <i class="fa fa-angle-up"></i>
                         </div>
-                        <div id="post-vote-score" th:text="${post.upvotes.size() - post.downvotes.size()}">
+                        <div id="post-vote-score"
+                             th:text="${(post.upvotes.size() - post.downvotes.size() > 0 ? '+' : '') + (post.upvotes.size() - post.downvotes.size())}">
                             0
                         </div>
                         <div class="post-vote-btn post-downvote text-light" id="post-downvote-btn"
@@ -52,9 +53,10 @@
                         </form>
                     </div>
                 </div>
-                <h6 class="card-subtitle mb-2">
+                <h6 class="card-subtitle mb-2 d-flex justify-content-between">
                     <a class="text-muted" href="#" th:href="@{'~/user/' + ${post.author.id} + '/show'}"
                        th:text="${post.author.username}">USERNAME</a>
+                    <span th:text="${#temporals.format(post.createdAt, 'dd-MM-yyyy HH:mm')}">01.01.2001</span>
                 </h6>
                 <p class="card-text" th:text="${post.text}">Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur eaque, pariatur recusandae laudantium odio provident officia quos sunt sapiente
@@ -108,6 +110,15 @@
     const downvoteBtn = document.querySelector('#post-downvote-btn');
     const voteScore = document.querySelector('#post-vote-score');
 
+    function updateScore(delta) {
+        const score = parseInt(voteScore.textContent) + delta;
+        if (score > 0) {
+            voteScore.textContent = `+${score}`;
+        } else {
+            voteScore.textContent = score;
+        }
+    }
+
     function onUpvote(postId) {
         fetch(`/post/${postId}/upvote`, {
             method: 'POST',
@@ -125,7 +136,7 @@
         .then(data => {
             if (data.status === 'OK') {
                 upvoteBtn.classList.add('post-vote-done');
-                voteScore.textContent = parseInt(voteScore.textContent) + 1
+                updateScore(1);
             }
         });
     }
@@ -143,7 +154,7 @@
         .then(data => {
             if (data.status === 'OK') {
                 downvoteBtn.classList.add('post-vote-done');
-                voteScore.textContent = parseInt(voteScore.textContent) - 1
+                updateScore(-1);
             }
         });
     }

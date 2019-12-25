@@ -24,7 +24,7 @@ public class IndexController {
 
     @GetMapping("/")
     public ModelAndView index(
-            @PageableDefault(size = 5, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 5, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         Page<Post> posts = postService.findAll(pageable);
 

@@ -27,4 +27,10 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "authority_id")
     )
     private Set<Authority> authorities = new HashSet<>();
+
+    public User(String username, String hashedPassword, Set<Authority> authorities) {
+        this.username = username;
+        this.hashedPassword = hashedPassword;
+        this.authorities = authorities;
+    }
 }
