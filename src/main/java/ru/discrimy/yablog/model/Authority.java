@@ -23,4 +23,8 @@ public class Authority extends BaseEntity {
     private String name;
     @ManyToMany(mappedBy = "authorities")
     private Set<User> users = new HashSet<>();
+
+    public Authority(String name) {
+        this.name = name;
+    }
 }

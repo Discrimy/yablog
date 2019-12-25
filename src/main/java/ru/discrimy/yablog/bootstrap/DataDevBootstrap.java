@@ -41,12 +41,10 @@ public class DataDevBootstrap implements CommandLineRunner {
         User admin = new User(
                 "admin",
                 passwordEncoder.encode("admin123"),
-                Set.of(),
                 Set.of(roleAdmin));
         User user1 = new User(
                 "user1",
                 passwordEncoder.encode("user1123"),
-                Set.of(),
                 Set.of());
 
         Post post1 = new Post("First post!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam scelerisque ipsum. Aenean porta urna vel mauris bibendum dictum. Morbi pretium convallis odio sed convallis. Ut in justo id augue consequat varius. Mauris lobortis varius ullamcorper. Mauris dignissim ex a erat dignissim, eget bibendum lacus luctus. Etiam malesuada augue id ullamcorper posuere. Nunc ipsum ligula, efficitur vel diam id, cursus accumsan metus. Aenean volutpat velit non arcu faucibus, nec pretium ipsum porta. Ut bibendum ut risus sit amet efficitur.\n" +
