@@ -7,6 +7,8 @@ import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.service.PostService;
 import ru.discrimy.yablog.service.jpa.repository.PostRepository;
 
+import java.util.List;
+
 @Service
 public class PostJpaService extends BaseJpaService<Post> implements PostService {
     public PostJpaService(PostRepository repository) {
@@ -16,5 +18,10 @@ public class PostJpaService extends BaseJpaService<Post> implements PostService 
     @Override
     public Page<Post> findAll(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    @Override
+    public List<Post> findAllPinned() {
+        return ((PostRepository) repository).findAllPinned();
     }
 }

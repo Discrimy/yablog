@@ -153,4 +153,35 @@ public class PostController {
         postService.save(post);
         return new VoteStatus(post.getId(), user.getId(), VoteStatus.Status.OK);
     }
+
+    @PostMapping("{postId}/pin")
+    public ModelAndView pin(@PathVariable Long postId,
+                            Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
+        if (user.getAuthorities().stream().noneMatch(authority -> authority.getName().equals("ROLE_ADMIN"))) {
+            throw new UnauthorizedEditException("User has no privileges to pin post");
+        }
+
+        post.setPinned(true);
+        postService.save(post);
+        return new ModelAndView("redirect:/");
+    }
+
+    @PostMapping("{postId}/unpin")
+    public ModelAndView unpin(@PathVariable Long postId,
+                              Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
+        if (user.getAuthorities().stream().noneMatch(authority -> authority.getName().equals("ROLE_ADMIN"))) {
+            throw new UnauthorizedEditException("User has no privileges to unpin post");
+        }
+
+        post.setPinned(false);
+        postService.save(post);
+        return new ModelAndView("redirect:/");
+    }
+
 }

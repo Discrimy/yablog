@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.service.PostService;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -26,17 +28,25 @@ public class IndexController {
     public ModelAndView index(
             @PageableDefault(size = 5, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
+        if (pageable.getPageNumber() == 1) {
+            List<Post> pinned = postService.findAllPinned();
+        }
         Page<Post> posts = postService.findAll(pageable);
 
         int currentPage = pageable.getPageNumber();
         int minPage = Math.max(currentPage - 3, 0);
         int maxPage = Math.min(currentPage + 3, posts.getTotalPages());
 
-        return new ModelAndView("post/list", Map.of(
+        Map<String, Object> map = new HashMap<>(Map.of(
                 "posts", posts,
                 "current", currentPage,
                 "min", minPage,
                 "max", maxPage
         ));
+        if (pageable.getPageNumber() == 0) {
+            map.put("pinned", postService.findAllPinned());
+        }
+
+        return new ModelAndView("post/list", map);
     }
 }

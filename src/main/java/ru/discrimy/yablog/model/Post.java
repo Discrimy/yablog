@@ -35,6 +35,9 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Downvote> downvotes = new HashSet<>();
 
+    @Column(name = "pinned")
+    private boolean pinned = false;
+
     public Post(String title, String text, User author) {
         this.title = title;
         this.text = text;
