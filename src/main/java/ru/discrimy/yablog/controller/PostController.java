@@ -13,10 +13,8 @@ import ru.discrimy.yablog.security.UserPrincipal;
 import ru.discrimy.yablog.service.CommentService;
 import ru.discrimy.yablog.service.PostService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 @RequestMapping("post")
@@ -65,15 +63,14 @@ public class PostController {
     }
 
     @GetMapping("add")
-    public ModelAndView savePost() {
+    public ModelAndView savePost(Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
         return new ModelAndView("post/add", Map.of(
                 "post", new Post(
                         "Post title",
                         "# Post header",
-                        null,
-                        new ArrayList<>(),
-                        Set.of(),
-                        Set.of()
+                        user
                 )));
     }
 
