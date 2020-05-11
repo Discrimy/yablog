@@ -29,7 +29,7 @@
             </form>
             <a class="mr-2 p-2 nav-link btn btn-secondary" href="#" th:href="@{~/post/add}">Add Post</a>
             <a class="mr-2 p-2 nav-link btn btn-secondary"
-               href="#" th:href="@{'~/user/' + ${#authentication.getPrincipal().getUser().getId()}}"
+               href="#" th:href="@{'~/user/' + ${#authentication.getPrincipal().getUser().getId()}} + '/show'"
                th:text="${#authentication.getPrincipal().getUsername()}">USERNAME</a>
         </li>
     </ul>
