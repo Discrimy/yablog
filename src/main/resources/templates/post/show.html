@@ -42,20 +42,20 @@
                     <h5 class="mb-0" th:text="${post.title}">Lorem ipsum, dolor sit amet consectetur adipisicing
                         elit.
                         Provident, voluptate? </h5>
-                    <div class="post-controls ml-auto">
-                        <form action="#" class="d-inline" method="POST"
+                    <div class="post-controls d-inline-flex ml-auto">
+                        <form action="#" class="d-inline mr-1" method="POST"
                               sec:authorize="hasRole('ADMIN')"
                               th:action="@{'~/post/' + ${post.id} + '/pin'}"
                               th:if="${!post.pinned}">
                             <button class="btn btn-sm btn-secondary" type="submit">Pin</button>
                         </form>
-                        <form action="#" class="d-inline" method="POST"
+                        <form action="#" class="d-inline mr-1" method="POST"
                               sec:authorize="hasRole('ADMIN')"
                               th:action="@{'~/post/' + ${post.id} + '/unpin'}"
                               th:if="${post.pinned}">
                             <button class="btn btn-sm btn-secondary" type="submit">Unpin</button>
                         </form>
-                        <a class="card-link btn btn-sm btn-secondary d-block" href="#"
+                        <a class="card-link btn btn-sm btn-secondary d-block mr-1" href="#"
                            th:href="@{'~/post/' + ${post.id} + '/edit'}"
                            th:if="${@accessEvaluator.hasAccessToPost(#request.userPrincipal, post)}">Edit</a>
                         <form action="#" class="d-inline" method="POST"
