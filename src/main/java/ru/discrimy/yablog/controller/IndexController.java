@@ -28,9 +28,6 @@ public class IndexController {
     public ModelAndView index(
             @PageableDefault(size = 5, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        if (pageable.getPageNumber() == 1) {
-            List<Post> pinned = postService.findAllPinned();
-        }
         Page<Post> posts = postService.findAll(pageable);
 
         int currentPage = pageable.getPageNumber();
