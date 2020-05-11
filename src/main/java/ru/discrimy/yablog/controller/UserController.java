@@ -38,17 +38,9 @@ public class UserController {
                 .orElseThrow(UserNotFoundException::new);
         Page<Post> posts = postService.findAllByAuthor(pageable, user);
 
-        int currentPage = pageable.getPageNumber();
-        int minPage = Math.max(currentPage - 3, 0);
-        int maxPage = Math.min(currentPage + 3, posts.getTotalPages());
-
-        Map<String, Object> map = new HashMap<>(Map.of(
+        return new ModelAndView("user/show", Map.of(
                 "user", user,
-                "posts", posts,
-                "current", currentPage,
-                "min", minPage,
-                "max", maxPage
+                "posts", posts
         ));
-        return new ModelAndView("user/show", map);
     }
 }

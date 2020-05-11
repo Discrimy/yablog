@@ -30,15 +30,8 @@ public class IndexController {
     ) {
         Page<Post> posts = postService.findAll(pageable);
 
-        int currentPage = pageable.getPageNumber();
-        int minPage = Math.max(currentPage - 3, 0);
-        int maxPage = Math.min(currentPage + 3, posts.getTotalPages());
-
         Map<String, Object> map = new HashMap<>(Map.of(
-                "posts", posts,
-                "current", currentPage,
-                "min", minPage,
-                "max", maxPage
+                "posts", posts
         ));
         if (pageable.getPageNumber() == 0) {
             map.put("pinned", postService.findAllPinned());

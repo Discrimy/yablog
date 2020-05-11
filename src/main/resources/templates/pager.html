@@ -16,8 +16,14 @@
 
 <nav aria-label="Page navigation"
      class="d-flex justify-content-center"
-     th:fragment="pager(current, min, max)">
+     th:fragment="pager(page)"
+     th:with="current=${page.getNumber()},
+              min=${T(Math).max(page.getNumber() - 3, 0)},
+              max=${T(Math).min(page.getNumber() + 3, page.getTotalPages())}">
     <ul class="pagination">
+        <li class="page-item" th:classappend="${page.isFirst()} ? 'disabled'">
+            <a class="page-link" href="#" th:href="@{''(page=${0})}">First</a>
+        </li>
         <li class="page-item" th:classappend="${current == min} ? 'disabled'">
             <a class="page-link" href="#" th:href="@{''(page=${current - 1})}">Previous</a>
         </li>
@@ -29,6 +35,9 @@
         </li>
         <li class="page-item" th:classappend="${current == max - 1} ? 'disabled'">
             <a class="page-link" href="#" th:href="@{''(page=${current + 1})}">Next</a>
+        </li>
+        <li class="page-item" th:classappend="${page.isLast()} ? 'disabled'">
+            <a class="page-link" href="#" th:href="@{''(page=${page.getTotalPages() - 1})}">Last</a>
         </li>
     </ul>
 </nav>
