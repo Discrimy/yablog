@@ -30,9 +30,9 @@ public class Post extends BaseEntity {
     @Column(name = "created_at")
     LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Upvote> upvotes = new HashSet<>();
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Downvote> downvotes = new HashSet<>();
 
     @Column(name = "pinned")

@@ -16,7 +16,8 @@ public class AccessEvaluator {
 
         User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
 
-        return post.getAuthor().getId().equals(user.getId())
-                || user.getAuthorities().stream().anyMatch(authority -> authority.getName().equals("ROLE_ADMIN"));
+        return post.getAuthor().equals(user)
+                || user.getAuthorities().stream()
+                .anyMatch(authority -> authority.getName().equals("ROLE_ADMIN"));
     }
 }

@@ -12,4 +12,10 @@ public interface PostService extends BaseService<Post> {
     Page<Post> findAllByAuthor(Pageable pageable, User user);
 
     List<Post> findAllPinned();
+
+    boolean upvote(Post post, User user);
+    boolean unupvote(Post post, User user);
+
+    boolean downvote(Post post, User user);
+    boolean undownvote(Post post, User user);
 }

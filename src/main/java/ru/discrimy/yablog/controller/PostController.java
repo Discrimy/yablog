@@ -1,5 +1,6 @@
 package ru.discrimy.yablog.controller;
 
+import org.dom4j.rule.Mode;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import ru.discrimy.yablog.service.PostService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("post")
@@ -39,9 +41,9 @@ public class PostController {
             User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
 
             map.put("isPostUpvoted", post.getUpvotes().stream()
-                    .anyMatch(upvote -> upvote.getUser().getId().equals(user.getId())));
+                    .anyMatch(upvote -> upvote.getUser().equals(user)));
             map.put("isPostDownvoted", post.getDownvotes().stream()
-                    .anyMatch(downvote -> downvote.getUser().getId().equals(user.getId())));
+                    .anyMatch(downvote -> downvote.getUser().equals(user)));
         }
 
         return new ModelAndView("post/show", map);
@@ -123,35 +125,57 @@ public class PostController {
     }
 
     @PostMapping("{postId}/upvote")
-    public @ResponseBody
-    VoteStatus upvote(@PathVariable Long postId,
-                      Authentication authentication) {
-        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
-
-        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
-        if (post.getUpvotes().stream().anyMatch(upvote -> upvote.getUser().getId().equals(user.getId()))) {
-            return new VoteStatus(post.getId(), user.getId(), VoteStatus.Status.ALREADY_DONE);
-        }
-
-        post.getUpvotes().add(new Upvote(post, user));
-        postService.save(post);
-        return new VoteStatus(post.getId(), user.getId(), VoteStatus.Status.OK);
-    }
-
-    @PostMapping("{postId}/downvote")
-    @ResponseBody
-    public VoteStatus downvote(@PathVariable Long postId,
+    public ModelAndView upvote(@PathVariable Long postId,
                                Authentication authentication) {
         User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
 
-        Post post = postService.findById(postId).orElseThrow(PostNotFoundException::new);
-        if (post.getDownvotes().stream().anyMatch(downvote -> downvote.getUser().getId().equals(user.getId()))) {
-            return new VoteStatus(post.getId(), user.getId(), VoteStatus.Status.ALREADY_DONE);
-        }
+        Post post = postService.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
 
-        post.getDownvotes().add(new Downvote(post, user));
-        postService.save(post);
-        return new VoteStatus(post.getId(), user.getId(), VoteStatus.Status.OK);
+        postService.undownvote(post, user);
+        postService.upvote(post, user);
+
+        return new ModelAndView("redirect:/post/" + post.getId() + "/show");
+    }
+
+    @PostMapping("{postId}/unupvote")
+    public ModelAndView unupvote(@PathVariable Long postId,
+                                 Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        Post post = postService.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+
+        postService.unupvote(post, user);
+
+        return new ModelAndView("redirect:/post/" + post.getId() + "/show");
+    }
+
+    @PostMapping("{postId}/downvote")
+    public ModelAndView downvote(@PathVariable Long postId,
+                               Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        Post post = postService.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+
+        postService.unupvote(post, user);
+        postService.downvote(post, user);
+
+        return new ModelAndView("redirect:/post/" + post.getId() + "/show");
+    }
+
+    @PostMapping("{postId}/undownvote")
+    public ModelAndView undownvote(@PathVariable Long postId,
+                                 Authentication authentication) {
+        User user = ((UserPrincipal) authentication.getPrincipal()).getUser();
+
+        Post post = postService.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+
+        postService.undownvote(post, user);
+
+        return new ModelAndView("redirect:/post/" + post.getId() + "/show");
     }
 
     @PostMapping("{postId}/pin")
