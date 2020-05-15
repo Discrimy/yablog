@@ -23,7 +23,7 @@
                 <div class="card-title d-flex justify-content-start align-items-center">
                     <div class="post-vote-btn mr-3 d-flex flex-column">
                         <form method="post" id="post-upvote-btn"
-                              sec:authorize="isAuthenticated()"
+                              sec:authorize="${hasPermission(#vars.post, 'vote')}"
                               th:with="action=${isPostUpvoted} ? 'unupvote' : 'upvote'"
                               th:action="@{|~/post/${post.id}/${action}|}">
                             <input name="postId" th:value="${post.id}" type="hidden">
@@ -40,7 +40,7 @@
                         </div>
 
                         <form method="post" id="post-downvote-btn"
-                              sec:authorize="isAuthenticated()"
+                              sec:authorize="${hasPermission(#vars.post, 'vote')}"
                               th:with="action=${isPostDownvoted} ? 'undownvote' : 'downvote'"
                               th:action="@{|~/post/${post.id}/${action}|}">
                             <input name="postId" th:value="${post.id}" type="hidden">
@@ -55,23 +55,23 @@
                         Provident, voluptate? </h5>
                     <div class="post-controls d-inline-flex ml-auto">
                         <form action="#" class="d-inline mr-1" method="POST"
-                              sec:authorize="hasRole('ADMIN')"
+                              sec:authorize="${hasPermission(#vars.post, 'pin')}"
                               th:action="@{'~/post/' + ${post.id} + '/pin'}"
                               th:if="${!post.pinned}">
                             <button class="btn btn-sm btn-secondary" type="submit">Pin</button>
                         </form>
                         <form action="#" class="d-inline mr-1" method="POST"
-                              sec:authorize="hasRole('ADMIN')"
+                              sec:authorize="${hasPermission(#vars.post, 'unpin')}"
                               th:action="@{'~/post/' + ${post.id} + '/unpin'}"
                               th:if="${post.pinned}">
                             <button class="btn btn-sm btn-secondary" type="submit">Unpin</button>
                         </form>
                         <a class="card-link btn btn-sm btn-secondary d-block mr-1" href="#"
-                           th:href="@{'~/post/' + ${post.id} + '/edit'}"
-                           th:if="${@accessEvaluator.hasAccessToPost(#request.userPrincipal, post)}">Edit</a>
+                              sec:authorize="${hasPermission(#vars.post, 'edit')}"
+                              th:href="@{'~/post/' + ${post.id} + '/edit'}">Edit</a>
                         <form action="#" class="d-inline" method="POST"
-                              th:action="@{'~/post/' + ${post.id} + '/delete'}"
-                              th:if="${@accessEvaluator.hasAccessToPost(#request.userPrincipal, post)}">
+                              sec:authorize="${hasPermission(#vars.post, 'remove')}"
+                              th:action="@{'~/post/' + ${post.id} + '/delete'}">
                             <button class="btn btn-sm btn-secondary" type="submit">Delete</button>
                         </form>
                     </div>
