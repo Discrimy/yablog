@@ -16,7 +16,7 @@
 
 <div id="content">
     <div class="container-fluid">
-        <form action="#" method="post" th:action="@{~/post/add}" th:object="${post}">
+        <form action="#" method="post" th:action="@{~/post/save}" th:object="${post}">
             <input th:field="*{id}" type="hidden">
             <input th:field="*{author}" type="hidden">
             <div class="row">

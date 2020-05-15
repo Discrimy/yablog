@@ -71,7 +71,7 @@
                               th:href="@{'~/post/' + ${post.id} + '/edit'}">Edit</a>
                         <form action="#" class="d-inline" method="POST"
                               sec:authorize="${hasPermission(#vars.post, 'remove')}"
-                              th:action="@{'~/post/' + ${post.id} + '/delete'}">
+                              th:action="@{'~/post/' + ${post.id} + '/remove'}">
                             <button class="btn btn-sm btn-secondary" type="submit">Delete</button>
                         </form>
                     </div>

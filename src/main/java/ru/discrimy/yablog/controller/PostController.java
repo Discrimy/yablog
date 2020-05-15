@@ -67,8 +67,8 @@ public class PostController {
     }
 
     @PreAuthorize("hasPermission(null, 'create')")
-    @GetMapping("add")
-    public ModelAndView savePost(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+    @GetMapping("new")
+    public ModelAndView newPost(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         User user = userPrincipal.getUser();
 
         return new ModelAndView("post/add", Map.of(
@@ -88,7 +88,7 @@ public class PostController {
     }
 
     @PreAuthorize("hasPermission(#post, 'edit')")
-    @PostMapping("add")
+    @PostMapping("save")
     public ModelAndView savePost(@ModelAttribute Post post,
                                  @AuthenticationPrincipal UserPrincipal userPrincipal) {
         User user = userPrincipal.getUser();
@@ -103,8 +103,8 @@ public class PostController {
     }
 
     @PreAuthorize("hasPermission(#post, 'remove')")
-    @PostMapping("{postId}/delete")
-    public ModelAndView deletePost(@PathVariable("postId") Post post,
+    @PostMapping("{postId}/remove")
+    public ModelAndView removePost(@PathVariable("postId") Post post,
                                    @AuthenticationPrincipal UserPrincipal userPrincipal) {
         postService.delete(post);
         return new ModelAndView("redirect:/");
