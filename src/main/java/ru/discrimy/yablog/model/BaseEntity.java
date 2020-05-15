@@ -11,7 +11,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
-//@EqualsAndHashCode(of = "id")
 @MappedSuperclass
 public class BaseEntity {
     @Id

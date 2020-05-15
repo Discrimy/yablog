@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"author", "comments"})
+@ToString(of = {"title", "createdAt", "pinned"})
 @Entity
 @Table(name = "posts")
 public class Post extends BaseEntity {
@@ -22,17 +22,17 @@ public class Post extends BaseEntity {
     @Column(name = "text", nullable = false)
     @Lob
     private String text;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
     @Column(name = "created_at")
     LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Upvote> upvotes = new HashSet<>();
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Downvote> downvotes = new HashSet<>();
 
     @Column(name = "pinned")
