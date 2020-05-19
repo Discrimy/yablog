@@ -8,7 +8,7 @@ import ru.discrimy.yablog.service.UserService;
 
 @Service
 public class UserPrincipalService implements UserDetailsService {
-    private UserService userService;
+    private final UserService userService;
 
     public UserPrincipalService(UserService userService) {
         this.userService = userService;

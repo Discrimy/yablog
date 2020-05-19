@@ -19,11 +19,11 @@ import java.util.Set;
 @Component
 @Profile("dev")
 public class DataDevBootstrap implements CommandLineRunner {
-    private PostService postService;
-    private CommentService commentService;
-    private UserService userService;
+    private final PostService postService;
+    private final CommentService commentService;
+    private final UserService userService;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public DataDevBootstrap(PostService postService, CommentService commentService, UserService userService, PasswordEncoder passwordEncoder) {
         this.postService = postService;
@@ -33,7 +33,7 @@ public class DataDevBootstrap implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.debug("Loading test data...");
 
         Authority roleAdmin = new Authority("ROLE_ADMIN", null);

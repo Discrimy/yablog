@@ -15,14 +15,13 @@ import ru.discrimy.yablog.model.User;
 import ru.discrimy.yablog.service.PostService;
 import ru.discrimy.yablog.service.UserService;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping("user")
 public class UserController {
-    private UserService userService;
-    private PostService postService;
+    private final UserService userService;
+    private final PostService postService;
 
     public UserController(UserService userService, PostService postService) {
         this.userService = userService;

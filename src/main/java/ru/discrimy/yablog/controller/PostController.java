@@ -1,36 +1,30 @@
 package ru.discrimy.yablog.controller;
 
-import org.dom4j.rule.Mode;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.discrimy.yablog.exceptions.PostNotFoundException;
-import ru.discrimy.yablog.exceptions.UnauthorizedDeleteException;
 import ru.discrimy.yablog.exceptions.UnauthorizedEditException;
-import ru.discrimy.yablog.model.*;
-import ru.discrimy.yablog.security.AccessEvaluator;
+import ru.discrimy.yablog.model.Comment;
+import ru.discrimy.yablog.model.Post;
+import ru.discrimy.yablog.model.User;
 import ru.discrimy.yablog.security.UserPrincipal;
 import ru.discrimy.yablog.service.CommentService;
 import ru.discrimy.yablog.service.PostService;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("post")
 public class PostController {
-    private PostService postService;
-    private CommentService commentService;
-    private AccessEvaluator accessEvaluator;
+    private final PostService postService;
+    private final CommentService commentService;
 
-    public PostController(PostService postService, CommentService commentService, AccessEvaluator accessEvaluator) {
+    public PostController(PostService postService, CommentService commentService) {
         this.postService = postService;
         this.commentService = commentService;
-        this.accessEvaluator = accessEvaluator;
     }
 
     @GetMapping("{postId}/show")

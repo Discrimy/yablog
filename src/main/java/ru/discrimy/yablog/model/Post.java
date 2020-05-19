@@ -17,6 +17,8 @@ import java.util.Set;
 @Entity
 @Table(name = "posts")
 public class Post extends BaseEntity {
+    @Column(name = "created_at")
+    LocalDateTime createdAt = LocalDateTime.now();
     @Column(name = "title", nullable = false)
     private String title;
     @Column(name = "text", nullable = false)
@@ -27,9 +29,6 @@ public class Post extends BaseEntity {
     private User author;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
-    @Column(name = "created_at")
-    LocalDateTime createdAt = LocalDateTime.now();
-
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Upvote> upvotes = new HashSet<>();
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

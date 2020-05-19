@@ -3,8 +3,6 @@ package ru.discrimy.yablog.service.jpa.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
-import ru.discrimy.yablog.exceptions.PostNotFoundException;
 import ru.discrimy.yablog.model.Downvote;
 import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.model.Upvote;

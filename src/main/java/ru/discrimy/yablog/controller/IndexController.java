@@ -12,13 +12,12 @@ import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.service.PostService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/")
 public class IndexController {
-    private PostService postService;
+    private final PostService postService;
 
     public IndexController(PostService postService) {
         this.postService = postService;

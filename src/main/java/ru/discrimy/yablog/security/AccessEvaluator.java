@@ -16,9 +16,9 @@ public class AccessEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication auth, Object object, Object permObject) {
         User user = (
-                   auth == null
-                || auth.getPrincipal() == null
-                || auth instanceof AnonymousAuthenticationToken)
+                auth == null
+                        || auth.getPrincipal() == null
+                        || auth instanceof AnonymousAuthenticationToken)
                 ? null
                 : ((UserPrincipal) auth.getPrincipal()).getUser();
         if (user == null) {
