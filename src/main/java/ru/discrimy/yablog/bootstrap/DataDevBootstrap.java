@@ -36,7 +36,7 @@ public class DataDevBootstrap implements CommandLineRunner {
     public void run(String... args) {
         log.debug("Loading test data...");
 
-        Authority roleAdmin = new Authority("ROLE_ADMIN", null);
+        Authority roleAdmin = new Authority("ROLE_ADMIN");
 
         User admin = new User(
                 "admin",
