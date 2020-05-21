@@ -10,7 +10,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "posts")
+@ToString(of = {"username"})
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -20,6 +20,10 @@ public class User extends BaseEntity {
     private String hashedPassword;
     @OneToMany(mappedBy = "author")
     private Set<Post> posts = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<Upvote> upvotes = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<Downvote> downvotes = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_to_authority",

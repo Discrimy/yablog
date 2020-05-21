@@ -35,11 +35,15 @@ public class UserController {
     ) {
         User user = userService.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
+        int givenUpvotes = user.getUpvotes().size();
+        int givenDownvotes = user.getDownvotes().size();
         Page<Post> posts = postService.findAllByAuthor(pageable, user);
 
         return new ModelAndView("user/show", Map.of(
                 "user", user,
-                "posts", posts
+                "posts", posts,
+                "givenUpvotes", givenUpvotes,
+                "givenDownvotes", givenDownvotes
         ));
     }
 }
