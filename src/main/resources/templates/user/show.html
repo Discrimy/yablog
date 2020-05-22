@@ -22,7 +22,7 @@
             <div class="card-body">
                 <h5 class="card-title"
                     th:text="|${user.username}'s stats|">USERNAME's stats</h5>
-                <p class="card-text">
+                <div class="card-text">
                     <table class="table text-light">
                         <tr>
                             <td>Posts created</td>
@@ -41,7 +41,7 @@
                             <td th:text="${score}">COUNT</td>
                         </tr>
                     </table>
-                </p>
+                </div>
             </div>
         </div>
 
