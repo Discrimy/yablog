@@ -7,7 +7,7 @@ import ru.discrimy.yablog.service.jpa.repository.CommentRepository;
 
 @Service
 public class CommentJpaService extends BaseJpaService<Comment> implements CommentService {
-    public CommentJpaService(CommentRepository repository) {
-        super(repository);
+    public CommentJpaService(CommentRepository commentRepository) {
+        super(commentRepository);
     }
 }

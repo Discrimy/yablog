@@ -14,23 +14,26 @@ import java.util.List;
 
 @Service
 public class PostJpaService extends BaseJpaService<Post> implements PostService {
-    public PostJpaService(PostRepository repository) {
-        super(repository);
+    private final PostRepository postRepository;
+
+    public PostJpaService(PostRepository postRepository) {
+        super(postRepository);
+        this.postRepository = postRepository;
     }
 
     @Override
     public Page<Post> findAll(Pageable pageable) {
-        return repository.findAll(pageable);
+        return postRepository.findAll(pageable);
     }
 
     @Override
     public Page<Post> findAllByAuthor(Pageable pageable, User user) {
-        return ((PostRepository) repository).findAllByAuthor(pageable, user);
+        return postRepository.findAllByAuthor(pageable, user);
     }
 
     @Override
     public List<Post> findAllPinned() {
-        return ((PostRepository) repository).findAllPinned();
+        return postRepository.findAllPinned();
     }
 
     @Override

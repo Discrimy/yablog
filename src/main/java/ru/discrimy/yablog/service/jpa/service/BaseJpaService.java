@@ -9,37 +9,37 @@ import java.util.Optional;
 import java.util.Set;
 
 public class BaseJpaService<T extends BaseEntity> implements BaseService<T> {
-    protected BaseRepository<T> repository;
+    protected BaseRepository<T> baseRepository;
 
-    public BaseJpaService(BaseRepository<T> repository) {
-        this.repository = repository;
+    public BaseJpaService(BaseRepository<T> baseRepository) {
+        this.baseRepository = baseRepository;
     }
 
 
     @Override
     public Optional<T> findById(Long id) {
-        return repository.findById(id);
+        return baseRepository.findById(id);
     }
 
     @Override
     public Set<T> findAll() {
         return new HashSet<T>() {{
-            addAll(repository.findAll());
+            addAll(baseRepository.findAll());
         }};
     }
 
     @Override
     public T save(T data) {
-        return repository.save(data);
+        return baseRepository.save(data);
     }
 
     @Override
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        baseRepository.deleteById(id);
     }
 
     @Override
     public void delete(T data) {
-        repository.delete(data);
+        baseRepository.delete(data);
     }
 }

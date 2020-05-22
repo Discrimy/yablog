@@ -9,18 +9,21 @@ import java.util.Optional;
 
 @Service
 public class UserJpaService extends BaseJpaService<User> implements UserService {
-    public UserJpaService(UserRepository repository) {
-        super(repository);
+    private final UserRepository userRepository;
+
+    public UserJpaService(UserRepository userRepository) {
+        super(userRepository);
+        this.userRepository = userRepository;
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return ((UserRepository) repository).findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public int getUserScore(User user) {
-        return ((UserRepository) repository).getUserTakenUpvotes(user)
-                - ((UserRepository) repository).getUserTakenDownvotes(user);
+        return userRepository.getUserTakenUpvotes(user)
+                - userRepository.getUserTakenDownvotes(user);
     }
 }
