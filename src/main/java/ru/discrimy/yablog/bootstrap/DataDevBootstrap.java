@@ -5,10 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.discrimy.yablog.model.Authority;
-import ru.discrimy.yablog.model.Comment;
-import ru.discrimy.yablog.model.Post;
-import ru.discrimy.yablog.model.User;
+import ru.discrimy.yablog.model.*;
 import ru.discrimy.yablog.service.CommentService;
 import ru.discrimy.yablog.service.PostService;
 import ru.discrimy.yablog.service.UserService;
@@ -88,10 +85,12 @@ public class DataDevBootstrap implements CommandLineRunner {
         commentService.save(comment15);
 
         for (int i = 0; i < 30; i++) {
-            postService.save(new Post(
+            Post post = new Post(
                     "Lorem",
                     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint autem sed tenetur in suscipit nam vero modi fugit ad quod.",
-                    user1));
+                    user1);
+            post.getUpvotes().add(new Upvote(post, admin));
+            postService.save(post);
         }
 
         log.debug("Loading finished");

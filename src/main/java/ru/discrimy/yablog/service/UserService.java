@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface UserService extends BaseService<User> {
     Optional<User> findByUsername(String username);
+
+    int getUserScore(User user);
 }

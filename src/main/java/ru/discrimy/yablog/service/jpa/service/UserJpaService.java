@@ -17,4 +17,10 @@ public class UserJpaService extends BaseJpaService<User> implements UserService 
     public Optional<User> findByUsername(String username) {
         return ((UserRepository) repository).findByUsername(username);
     }
+
+    @Override
+    public int getUserScore(User user) {
+        return ((UserRepository) repository).getUserTakenUpvotes(user)
+                - ((UserRepository) repository).getUserTakenDownvotes(user);
+    }
 }
