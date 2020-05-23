@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Yablog</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{~/static/css/bootstrap.min.css}">
+    <link href="../static/css/style.css" rel="stylesheet" th:href="@{~/static/css/style.css}">
+</head>
+
+<body>
+
+<div id="post-list" th:fragment="post-list(posts)">
+    <div th:each="post : ${posts}" class="card bg-primary text-light mb-3" th:fragment="post(post)">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${post.title}">POST TITLE</h5>
+            <h6 class="card-subtitle mb-2">
+                <a class="text-muted" href="#" th:href="@{'~/user/' + ${post.author.id} + '/show'}"
+                   th:text="${post.author.username}">USERNAME</a>
+            </h6>
+            <p class="post-text card-text" th:text="${post.text}">Lorem ipsum dolor sit amet consectetur
+                adipisicing
+                elit.
+                Consequuntur eaque, pariatur recusandae laudantium odio provident officia quos sunt sapiente
+                impedit! Voluptates quod quo ratione doloremque, voluptas provident autem temporibus dignissimos
+                recusandae ut error, laboriosam labore cum dicta iusto expedita? Eius dolor, nostrum harum
+                voluptatum in quisquam molestias quasi provident veniam voluptatem facere totam debitis?
+                Quisquam
+                rem culpa, ducimus, cupiditate voluptatum repellendus inventore deserunt dolorum laudantium
+                fugiat
+                nobis minima sint doloremque rerum corrupti earum, labore exercitationem! Unde asperiores minus
+                tempore sequi delectus veniam. Perspiciatis laborum a sit corrupti quas cumque laboriosam
+                expedita?
+                Excepturi eos recusandae quisquam temporibus deleniti voluptatum, dolores illo!</p>
+            <a class="card-link" href="#" th:href="@{'~/post/' + ${post.id} + '/show'}">View</a>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="post-page-list(posts)">
+    <div th:replace="posts :: post-list(${posts})"></div>
+
+    <nav th:replace="pager :: pager(${posts})"></nav>
+</div>
+
+</body>
+
+</html>
