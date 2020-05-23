@@ -37,6 +37,12 @@ public class Post extends BaseEntity {
     @Column(name = "pinned")
     private boolean pinned = false;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "post_to_tag",
+        joinColumns = @JoinColumn(name = "post_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags = new HashSet<>();
+
     public Post(String title, String text, User author) {
         this.title = title;
         this.text = text;

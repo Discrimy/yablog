@@ -36,6 +36,12 @@
                 tempore sequi delectus veniam. Perspiciatis laborum a sit corrupti quas cumque laboriosam
                 expedita?
                 Excepturi eos recusandae quisquam temporibus deleniti voluptatum, dolores illo!</p>
+            <div class="card-subtitle mb-2 d-flex flex-row">
+                <div class="mr-1 px-2 bg-secondary rounded-pill"
+                     th:text="${tag.name}"
+                     th:each="tag : ${post.tags}">
+                </div>
+            </div>
             <a class="card-link" href="#" th:href="@{'~/post/' + ${post.id} + '/show'}">View</a>
         </div>
     </div>
