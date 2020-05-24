@@ -1,6 +1,5 @@
 package ru.discrimy.yablog.service.jpa.service;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.discrimy.yablog.model.Tag;
 import ru.discrimy.yablog.service.TagService;

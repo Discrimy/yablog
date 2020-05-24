@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.discrimy.yablog.api.converters.PostToPostResponseConverter;
 import ru.discrimy.yablog.api.model.ErrorResponse;
 import ru.discrimy.yablog.api.model.NewPostRequest;
+import ru.discrimy.yablog.api.model.PostResponse;
 import ru.discrimy.yablog.exceptions.ResourceNotFoundException;
 import ru.discrimy.yablog.model.Post;
-import ru.discrimy.yablog.api.model.PostResponse;
 import ru.discrimy.yablog.model.User;
 import ru.discrimy.yablog.security.UserPrincipal;
 import ru.discrimy.yablog.service.PostService;
@@ -80,9 +80,9 @@ public class PostRestController {
                 Collections.emptySet(),
                 false,
                 postRequest.getTags().stream()
-                    .map(tagService::findByName)
-                    .map(optionalTag -> optionalTag.orElseThrow(ResourceNotFoundException::new))
-                    .collect(Collectors.toSet())
+                        .map(tagService::findByName)
+                        .map(optionalTag -> optionalTag.orElseThrow(ResourceNotFoundException::new))
+                        .collect(Collectors.toSet())
         );
         Post savedPost = postService.save(post);
         return postConverter.convert(savedPost);

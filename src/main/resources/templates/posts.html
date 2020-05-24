@@ -15,7 +15,7 @@
 <body>
 
 <div id="post-list" th:fragment="post-list(posts)">
-    <div th:each="post : ${posts}" class="card bg-primary text-light mb-3" th:fragment="post(post)">
+    <div class="card bg-primary text-light mb-3" th:each="post : ${posts}" th:fragment="post(post)">
         <div class="card-body">
             <h5 class="card-title" th:text="${post.title}">POST TITLE</h5>
             <h6 class="card-subtitle mb-2">
@@ -38,8 +38,8 @@
                 Excepturi eos recusandae quisquam temporibus deleniti voluptatum, dolores illo!</p>
             <div class="card-subtitle mb-2 d-flex flex-row">
                 <div class="mr-1 px-2 bg-secondary rounded-pill"
-                     th:text="${tag.name}"
-                     th:each="tag : ${post.tags}">
+                     th:each="tag : ${post.tags}"
+                     th:text="${tag.name}">
                 </div>
             </div>
             <a class="card-link" href="#" th:href="@{'~/post/' + ${post.id} + '/show'}">View</a>

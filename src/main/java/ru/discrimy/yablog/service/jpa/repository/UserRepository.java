@@ -12,6 +12,7 @@ public interface UserRepository extends BaseRepository<User> {
 
     @Query("SELECT COUNT(uv) FROM Upvote uv WHERE post IN (SELECT p.id FROM Post p WHERE p.author=:user)")
     int getUserTakenUpvotes(User user);
+
     @Query("SELECT COUNT(dv) FROM Downvote dv WHERE post IN (SELECT p.id FROM Post p WHERE p.author=:user)")
     int getUserTakenDownvotes(User user);
 }

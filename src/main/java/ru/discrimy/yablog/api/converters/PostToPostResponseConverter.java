@@ -2,9 +2,7 @@ package ru.discrimy.yablog.api.converters;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import ru.discrimy.yablog.api.model.CommentResponse;
 import ru.discrimy.yablog.api.model.PostResponse;
-import ru.discrimy.yablog.api.model.TagResponse;
 import ru.discrimy.yablog.model.Post;
 
 import java.time.ZoneOffset;
