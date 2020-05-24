@@ -5,7 +5,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.discrimy.yablog.exceptions.UnauthorizedEditException;
 import ru.discrimy.yablog.model.Comment;
 import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.model.User;
@@ -146,12 +145,6 @@ public class PostController {
     @PostMapping("{postId}/pin")
     public ModelAndView pin(@PathVariable("postId") Post post,
                             @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        User user = userPrincipal.getUser();
-
-        if (user.getAuthorities().stream().noneMatch(authority -> authority.getName().equals("ROLE_ADMIN"))) {
-            throw new UnauthorizedEditException("User has no privileges to pin post");
-        }
-
         post.setPinned(true);
         postService.save(post);
         return new ModelAndView("redirect:/");

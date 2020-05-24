@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ru.discrimy.yablog.exceptions.UserNotFoundException;
 import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.model.User;
 import ru.discrimy.yablog.service.PostService;
@@ -30,11 +29,9 @@ public class UserController {
 
     @GetMapping("{id}/show")
     public ModelAndView show(
-            @PathVariable("id") Long userId,
+            @PathVariable("id") User user,
             @PageableDefault(size = 5, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        User user = userService.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
         int givenUpvotes = user.getUpvotes().size();
         int givenDownvotes = user.getDownvotes().size();
         int score = userService.getUserScore(user);
