@@ -32,7 +32,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout();
+                .logout()
+                .and()
+                .httpBasic();
     }
 
     @Override

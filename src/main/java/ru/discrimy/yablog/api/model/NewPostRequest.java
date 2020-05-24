@@ -10,6 +10,6 @@ import java.util.Set;
 public class NewPostRequest {
     private String title;
     private String text;
-    private boolean pinned;
+    private Boolean pinned;
     private Set<String> tags;
 }

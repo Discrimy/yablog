@@ -1,5 +1,7 @@
 package ru.discrimy.yablog.api.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.discrimy.yablog.api.converters.PostToPostResponseConverter;
@@ -17,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,7 +35,7 @@ public class PostRestController {
     }
 
     @GetMapping("all")
-    public List<PostResponse> findAll() {
+    public List<PostResponse> getAll() {
         List<Post> posts = postService.findAll().stream()
                 .sorted(Comparator.comparing(Post::getCreatedAt))
                 .collect(Collectors.toList());
@@ -44,15 +45,17 @@ public class PostRestController {
     }
 
     @GetMapping("{postId}")
-    public PostResponse findById(@PathVariable("postId") Long id) {
+    public PostResponse get(@PathVariable("postId") Long id) {
         Post post = postService.findById(id)
                 .orElseThrow(PostNotFoundException::new);
 
         return postConverter.convert(post);
     }
 
+    @PreAuthorize("hasPermission(null, 'create')")
     @PostMapping("/")
-    public PostResponse newPost(
+    @ResponseStatus(HttpStatus.OK)
+    public PostResponse create(
             @AuthenticationPrincipal UserPrincipal principal,
             @RequestBody NewPostRequest postRequest) {
         User user = principal.getUser();
@@ -71,6 +74,35 @@ public class PostRestController {
                     .map(optionalTag -> optionalTag.orElseThrow(ResourceNotFoundException::new))
                     .collect(Collectors.toSet())
         );
+        Post savedPost = postService.save(post);
+        return postConverter.convert(savedPost);
+    }
+
+    @PreAuthorize("hasPermission(#post, 'edit')")
+    @PutMapping("{postId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PostResponse edit(
+            @RequestBody NewPostRequest postRequest,
+            @PathVariable("postId") Post post
+    ) {
+        if (post.getTitle() != null) {
+            post.setTitle(postRequest.getTitle());
+        }
+        if (postRequest.getText() != null) {
+            post.setText(postRequest.getText());
+        }
+        if (postRequest.getPinned() != null) {
+            post.setPinned(postRequest.getPinned());
+        }
+        if (postRequest.getTags() != null) {
+            post.setTags(
+                    postRequest.getTags().stream()
+                            .map(tagService::findByName)
+                            .map(optionalTag -> optionalTag.orElseThrow(ResourceNotFoundException::new))
+                            .collect(Collectors.toSet())
+            );
+        }
+
         Post savedPost = postService.save(post);
         return postConverter.convert(savedPost);
     }
