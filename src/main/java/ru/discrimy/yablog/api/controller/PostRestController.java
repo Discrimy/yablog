@@ -5,8 +5,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.discrimy.yablog.api.converters.PostToPostResponseConverter;
+import ru.discrimy.yablog.api.model.ErrorResponse;
 import ru.discrimy.yablog.api.model.NewPostRequest;
-import ru.discrimy.yablog.exceptions.PostNotFoundException;
 import ru.discrimy.yablog.exceptions.ResourceNotFoundException;
 import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.api.model.PostResponse;
@@ -34,6 +34,16 @@ public class PostRestController {
         this.postConverter = postConverter;
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse notFound(ResourceNotFoundException exception) {
+        return new ErrorResponse(
+                "Not Found",
+                404L,
+                exception.getMessage() != null ? exception.getMessage() : ""
+        );
+    }
+
     @GetMapping("all")
     public List<PostResponse> getAll() {
         List<Post> posts = postService.findAll().stream()
@@ -47,7 +57,7 @@ public class PostRestController {
     @GetMapping("{postId}")
     public PostResponse get(@PathVariable("postId") Long id) {
         Post post = postService.findById(id)
-                .orElseThrow(PostNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException::new);
 
         return postConverter.convert(post);
     }
