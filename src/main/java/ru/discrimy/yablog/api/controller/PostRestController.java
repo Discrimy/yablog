@@ -5,9 +5,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.discrimy.yablog.api.converters.PostToPostResponseConverter;
+import ru.discrimy.yablog.api.model.DeleteResponse;
 import ru.discrimy.yablog.api.model.ErrorResponse;
 import ru.discrimy.yablog.api.model.NewPostRequest;
 import ru.discrimy.yablog.api.model.PostResponse;
+import ru.discrimy.yablog.aspect.RequiredPost;
 import ru.discrimy.yablog.exceptions.ResourceNotFoundException;
 import ru.discrimy.yablog.model.Post;
 import ru.discrimy.yablog.model.User;
@@ -115,5 +117,13 @@ public class PostRestController {
 
         Post savedPost = postService.save(post);
         return postConverter.convert(savedPost);
+    }
+
+    @PreAuthorize("hasPermission(#post, 'remove')")
+    @DeleteMapping("{postId}")
+    @RequiredPost
+    public DeleteResponse remove(@PathVariable("postId") Post post) {
+        postService.delete(post);
+        return new DeleteResponse("ok");
     }
 }
