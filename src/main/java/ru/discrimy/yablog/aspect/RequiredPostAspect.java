@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 import ru.discrimy.yablog.exceptions.ResourceNotFoundException;
 import ru.discrimy.yablog.model.Post;
 
+/**
+ * RequiredPost aspect implementation
+ * @see RequiredPost
+ */
 @Aspect
 @Component
 public class RequiredPostAspect {

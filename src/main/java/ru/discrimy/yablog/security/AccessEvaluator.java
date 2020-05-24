@@ -10,6 +10,10 @@ import ru.discrimy.yablog.model.User;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Global object that checks user's permission to resource
+ * Usually uses by @PreAuthorize("hasPermission(#resourceObject, 'permission'")
+ */
 @Component
 public class AccessEvaluator implements PermissionEvaluator {
 

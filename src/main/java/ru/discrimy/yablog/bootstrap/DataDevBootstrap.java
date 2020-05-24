@@ -12,6 +12,9 @@ import ru.discrimy.yablog.service.UserService;
 
 import java.util.Set;
 
+/**
+ * Data bootstrap with "dev" profile
+ */
 @Slf4j
 @Component
 @Profile("dev")
